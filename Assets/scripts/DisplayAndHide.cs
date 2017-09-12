@@ -8,17 +8,26 @@ public class DisplayAndHide : MonoBehaviour {
     GameObject customFrame;
     GameObject toolFrame;
     string[] transformPara;
+	float[] CenterPos=new float[6];
+	GameObject OriginTool;
+
 	// Use this for initialization
 	void Start () {
            worldFrame = GameObject.Find("Frame");
            customFrame = GameObject.Find("customFrame");
            toolFrame = GameObject.Find("toolFrame");
-           //Hide(worldFrame);
-           //Hide(customFrame);
-           //Hide(toolFrame);
+			OriginTool= Instantiate(toolFrame,toolFrame.transform.position,toolFrame.transform.rotation) as GameObject;
+
+
+		OriginTool.transform.parent=GameObject.Find("help6").transform;
+		OriginTool.transform.localScale=new Vector3(1,1,1);
+
            HideWorld();
            HideCustom();
-           HideTool();
+        // HideTool();
+//	HideOriginTool();
+
+
 	}
 	
 	// Update is called once per frame
@@ -44,8 +53,22 @@ public class DisplayAndHide : MonoBehaviour {
         //{
         //    DisplayWorld();
         //}
+
+
 	}
 
+
+	void HideOriginTool()
+	{
+		OriginTool.SetActive(false);
+
+
+	}
+	void DispOriginTool()
+	{
+		OriginTool.SetActive(true);
+
+	}
     //void Hide(GameObject obj) {
        
     //    obj.SetActive(false);
@@ -100,14 +123,26 @@ public class DisplayAndHide : MonoBehaviour {
     }
 
 
-    void TransformToolFrame(object val)
+    void TransformToolFrame(string val)
     {
-        float f = (float)System.Convert.ToDouble(string.Format("{0}", val));
-        f *= 0.1f;
+		string[] ToolCenter=val.Split(' ');
+		for(int i=0;i<3;i++)
+		{CenterPos[i]=0.1f*(float)System.Convert.ToDouble(ToolCenter[i]);
+		}
+		for(int i=3;i<6;i++)
+		{CenterPos[i]=(float)System.Convert.ToDouble(ToolCenter[i]);
+		}
+
+
         toolFrame.SetActive(true);
-        toolFrame.transform.Translate(Vector3.up * -moveTool, Space.Self);
-        moveTool = f;
-        toolFrame.transform.Translate(Vector3.up * f, Space.Self);
+
+		toolFrame.transform.localPosition=new Vector3(-0.7499981f,-0.0002732873f,-0.0001205802f);
+		toolFrame.transform.localEulerAngles=new Vector3(0,180,90);
+
+        toolFrame.transform.Translate(new Vector3(CenterPos[0],CenterPos[2], CenterPos[1]), Space.Self);
+		toolFrame.transform.Rotate(Vector3.up * -CenterPos[5], Space.Self);
+		toolFrame.transform.Rotate(Vector3.forward * -CenterPos[4], Space.Self);
+		toolFrame.transform.Rotate(Vector3.right * -CenterPos[3], Space.Self);
 
     }
 
@@ -126,20 +161,18 @@ public class DisplayAndHide : MonoBehaviour {
         customFrame.transform.Rotate(Vector3.forward * -float.Parse(transformPara[4]), Space.World);
         customFrame.transform.Rotate(Vector3.up * -float.Parse(transformPara[5]), Space.World);
 
-    }
-
-    void deleteCustom()
-    {
-
-        customFrame.transform.position = new Vector3(0, 0, 0);
-        //this.transform.Rotate(-90, 0, 0);
-        //this.transform.Rotate(0, 0, 90);
-        customFrame.transform.Rotate(Vector3.up * float.Parse(transformPara[5]), Space.World);
-        customFrame.transform.Rotate(Vector3.forward * float.Parse(transformPara[4]), Space.World);
-        customFrame.transform.Rotate(Vector3.right * float.Parse(transformPara[3]), Space.World);
-        customFrame.SetActive(false);
-
-
 
     }
+
+	    void deleteCustom()
+	    {
+	
+	        customFrame.transform.position = new Vector3(0, 0, 0);
+	
+			customFrame.transform.rotation=Quaternion.identity;
+	        customFrame.SetActive(false);
+	
+	
+	
+	    }
 }
