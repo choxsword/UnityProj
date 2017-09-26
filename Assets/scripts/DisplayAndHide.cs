@@ -140,9 +140,9 @@ public class DisplayAndHide : MonoBehaviour {
 		toolFrame.transform.localEulerAngles=new Vector3(0,180,90);
 
         toolFrame.transform.Translate(new Vector3(CenterPos[0],CenterPos[2], CenterPos[1]), Space.Self);
-		toolFrame.transform.Rotate(Vector3.up * -CenterPos[5], Space.Self);
+		toolFrame.transform.Rotate(Vector3.up * -CenterPos[3], Space.Self);
 		toolFrame.transform.Rotate(Vector3.forward * -CenterPos[4], Space.Self);
-		toolFrame.transform.Rotate(Vector3.right * -CenterPos[3], Space.Self);
+		toolFrame.transform.Rotate(Vector3.right * -CenterPos[5], Space.Self);
 
     }
 
@@ -157,9 +157,9 @@ public class DisplayAndHide : MonoBehaviour {
         customFrame.transform.position = new Vector3(float.Parse(transformPara[0]) * 0.1f, float.Parse(transformPara[2]) * 0.1f, float.Parse(transformPara[1]) * 0.1f);
         //this.transform.Rotate(-90, 0, 0);
         //this.transform.Rotate(0, 0, 90);
-        customFrame.transform.Rotate(Vector3.right * -float.Parse(transformPara[3]), Space.World);
+        customFrame.transform.Rotate(Vector3.right * -float.Parse(transformPara[5]), Space.World);
         customFrame.transform.Rotate(Vector3.forward * -float.Parse(transformPara[4]), Space.World);
-        customFrame.transform.Rotate(Vector3.up * -float.Parse(transformPara[5]), Space.World);
+        customFrame.transform.Rotate(Vector3.up * -float.Parse(transformPara[3]), Space.World);
 
 
     }
